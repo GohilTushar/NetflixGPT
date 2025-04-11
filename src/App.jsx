@@ -1,19 +1,18 @@
+import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import Body from "./components/Body";
-import "./App.css";
-import { Provider } from "react-redux";
-import appStore from "./utils/appStore";
+import store from "./utils/states/store";
 
 function App() {
   return (
-    <>
-      <Provider store={appStore}>
-        <BrowserRouter>
-          <Body />
-        </BrowserRouter>
-      </Provider>
-    </>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Body />
+      </BrowserRouter>
+    </Provider>
   );
 }
 
 export default App;
+
+

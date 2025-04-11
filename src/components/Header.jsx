@@ -1,92 +1,97 @@
-import React, { useEffect } from "react";
-
-import { LOGO, SUPPORTED_LANGUAGES } from "../utils/constants";
-import singOut from "/signOut.png";
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser, removeUser } from "../utils/userSlice";
-import { toggleGptSearch } from "../utils/gptSlice";
-import { changeLanguage } from "../utils/configSlice";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import useOnClickOutside from "../hooks/useClickOutside";
+import { loginUser, logoutUser } from "../utils/states/userSlice";
+import { setView } from "../utils/states/gptSlice";
+import { auth } from "../utils/firebase";
+import CONSTANTS from "../utils/constants";
 
 const Header = () => {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const showGptSearch = useSelector((state) => state.gptSearch.showGptSearch);
-  const navigate = useNavigate();
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const user = useSelector((state) => state.user);
+	const gptView = useSelector((state) => state.gpt.view);
+	const refToMenu = useRef(null);
+	const { isMenuOpen, setIsMenuOpen } = useOnClickOutside(
+		refToMenu,
+		handleCloseMenu
+	);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // signIn,signUp
-        const { uid, email, displayName, photoURL } = user;
-        dispatch(addUser({ uid, email, displayName, photoURL }));
-        navigate("/browse");
-      } else {
-        dispatch(removeUser());
-        navigate("/");
-      }
-    });
-    return () => unsubscribe();
-  }, []);
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			if (user) {
+				const { uid, email, displayName } = user;
+				dispatch(loginUser({ uid, email, displayName, credit: 5 }));
+				navigate("/browse");
+			} else {
+				dispatch(logoutUser());
+				navigate("/");
+			}
+		});
 
-  const handleSignOut = () => {
-    signOut(auth)
-      .then(() => {
-        console.log("SignedOut");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+		return () => unsubscribe();
+	}, []);
 
-  const handleGptSearchClick = () => {
-    dispatch(toggleGptSearch());
-  };
+	const handleSignout = () => {
+		signOut(auth)
+			.then()
+			.catch((error) => {
+				console.log(error);
+			});
+	};
 
-  const handleLanguageChange = (e) => {
-    dispatch(changeLanguage(e.target.value));
-  };
+	function handleCloseMenu() {
+		setIsMenuOpen(false);
+	}
 
-  return (
-    <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-col md:flex-row justify-between">
-      <img className="w-44 mx-auto md:mx-0" src={LOGO} alt="logo" />
-      {user && (
-        <div className="flex justify-center gap-2 py-2">
-          {showGptSearch && (
-            <select
-              className="p-2 m-2 bg-gray-900 text-white"
-              onChange={handleLanguageChange}
-            >
-              {SUPPORTED_LANGUAGES.map((lang) => (
-                <option key={lang.identifier} value={lang.identifier}>
-                  {lang.name}
-                </option>
-              ))}
-            </select>
-          )}
-          <button
-            className="py-2 px-4 mx-4 my-2 bg-purple-800 text-white rounded-lg cursor-pointer"
-            onClick={handleGptSearchClick}
-          >
-            {showGptSearch ? "HomePage" : "GPT Search"}
-          </button>
-          <img
-            src={user?.photoURL}
-            className="hidden md:block w-12 h-12"
-            alt="user"
-          />
-          <img
-            src={singOut}
-            className="cursor-pointer w-12 h-12"
-            onClick={handleSignOut}
-            alt="signOut"
-          />
-        </div>
-      )}
-    </div>
-  );
+	const toggleGPTView = () => {
+		dispatch(setView());
+	};
+
+	return (
+		<div className="fixed backdrop-blur-md top-0 left-0 right-0 z-50 px-4 py-2 flex justify-between items-center bg-gradient-to-b from-black">
+			<img
+				src={CONSTANTS.SPELL_LOGO_BG_RED}
+				alt="netflix logo"
+				className="w-24 sm:w-40"
+			/>
+			{user && (
+				<div className="flex gap-4">
+					<button
+						className="cursor-pointer font-bold text-xs md:text-base text-white bg-purple-600 py-1 px-4 rounded-lg"
+						onClick={toggleGPTView}
+					>
+						{gptView ? "Home" : "GPT Search"}
+					</button>
+					<div ref={refToMenu}>
+						<img
+							onClick={() => setIsMenuOpen(!isMenuOpen)}
+							src={CONSTANTS.USER_AVATAR}
+							alt="userpic"
+							className="w-6 sm:w-10 cursor-pointer"
+						/>
+						<div
+							className={`${
+								!isMenuOpen && "hidden"
+							} absolute bg-white rounded right-2 top-[60px] sm:top-[95px] p-2 shadow-md animate-openmenu`}
+						>
+							<div className="w-4 h-4 bg-white rotate-45 absolute -top-2 right-2" />
+							<h4>Welcome! {user.displayName}</h4>
+							<hr className="mb-1 mt-2" />
+							<span
+								className="text-red-500 cursor-pointer inline-block"
+								onClick={handleSignout}
+							>
+								Sign Out
+							</span>
+						</div>
+					</div>
+				</div>
+			)}
+		</div>
+	);
 };
 
 export default Header;

@@ -1,61 +1,73 @@
-# Netflix-GPT
+# Netflix Clone with GPT Search Feature
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+[🌐 View Site](https://netflixgpt-pb.vercel.app/)
 
-   - create react app 
-   - tailwind css addded
-   - Header 
-   - Routing
-   - Login Form
-   - Register Form
-   - Form Validation
-   - useRef Hook
-   - firebase Setup 
-   - hosted live
-   - create signup user acc 
-   - login user acc
-   - Created user Store With Slice 
-   - push userinfo to redux store 
-   - updateProfile 
-   - signup Display name 
-   - if user not logged in then it cant go to the next page 
-   - ubsubscribe when the comoponent unmount 
-   - add hardcoaded value to the constant fields 
-   - Register TMDB API and Create an App & get Access Token 
-   - Get Data From TMDB now playing Movie List 
-   - create hook for now playing movies 
-   - create movie slice 
-   - add movie to redux store
-   - Planning for main and Secondry container
-   - fetch data for trailer video 
-   - Update store with trailer video data 
-   - Embedded the YT Video make it autoplay 
-   - Added Tailwind classses 
-   - Build Secondry Component
-   - Build Movie List
-   - Build Movie Card
-   - TMDB Image URL
-   - Made The Browse Page Amazing With Css
-   - use and created customhooks for diff type for movie
-   - GPT search Feature
-   - GPT Search Bar
-   - GPT Search Page
-   - Multi-language Feature in our APP
-   - Integrate the GPT API's
+This is a Netflix clone project with a GPT search feature that allows users to provide prompts, and the application will return a list of movies based on the input prompt.
 
+## Table of Contents
 
+- [Installation](#installation)
+- [Usage](#usage)
+- [Technologies Used](#technologies-used)
 
+## Installation
 
-# feature 
-Login/signup
-  - redirect to browsepage
-  - browsePage (after auth )
-    - Header
-    - mainMovie
-       - trailer background
-       - title & description 
-       - movieSuggetions
-       - MovieList * N
-  - NetFlixGPT
-   - searchbar
-   - movieSuggetions
+1. Clone this repository to your local machine using:
+
+```bash
+git clone https://github.com/prateek-budhiraja/netflix-gpt.git
+```
+
+2. Change directory to the project folder:
+
+```bash
+cd netflix-gpt
+```
+
+3. Install the required dependencies:
+
+```bash
+npm install
+```
+
+4. Start the development server:
+
+Rename the `.env.example` file to `.env` and add your keys for TMDB, OpenAI and Firebase.
+
+````bash
+
+5. Start the development server:
+
+```bash
+npm start
+````
+
+5. Open your web browser and navigate to [http://localhost:3000](http://localhost:3000) to use the Netflix clone with GPT search feature.
+
+## Usage
+
+1. When you navigate to [http://localhost:3000](http://localhost:3000), the application will open the login page.
+
+2. If you are not logged in, you can sign up for an account.
+
+3. After logging in or signing up, you will be redirected to the `/browse` page, where you'll find a collection of movies similar to Netflix.
+
+4. On the top of the `/browse` page, there is a GPT search button.
+
+5. Click the GPT search button to access the input box, where you can enter your search prompt.
+
+6. Enter your search prompt and press the search button or hit Enter to initiate the GPT search.
+
+7. The application will return a list of movies related to your search prompt.
+
+8. Click on any movie to view more details or watch it if available.
+
+## Technologies Used
+
+- React
+- Gemini AI for search functionality
+- Firebase for authentication
+- TMDB API for movie data
+- Tailwind for styling
+- React Router for routing
+- React Redux for state management
