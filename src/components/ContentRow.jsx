@@ -25,7 +25,7 @@ const ContentRow = ({ title, list }) => {
 						{first?.title || first?.name}
 					</h4>
 				</div>
-				{list.map((content) => (
+				{list.map((content) => content.backdrop_path&&(
 					<div key={content.id}>
 						<img
 							className="md:min-w-[250px] min-w-[200px] rounded-lg max-h-[140px] object-cover"

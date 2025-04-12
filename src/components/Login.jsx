@@ -250,7 +250,7 @@ const Login = () => {
 						{errorMessageForm.password}
 					</p>
 				)}
-				<button type="submit" className="bg-red-700 py-3 rounded mb-6">
+				<button type="submit" className="cursor-pointer bg-red-700 py-3 rounded mb-6">
 					{isSignIn ? "Sign In" : "Sign Up"}
 				</button>
 				<p className="mb-24">
