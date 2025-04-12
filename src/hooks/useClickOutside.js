@@ -1,14 +1,10 @@
 import { useState, useEffect } from "react";
 
-const useOnClickOutside = (ref, handler) => {
+const useOnClickOutside = (ref) => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	const listener = (event) => {
-		if (!ref.current || ref.current.contains(event.target)) {
-			return;
-		}
-
-		handler(event);
+		if (ref?.current?.contains(event.target))return;
 		setIsMenuOpen(false);
 	};
 

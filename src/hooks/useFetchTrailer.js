@@ -1,33 +1,37 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import CONSTANTS from "../utils/constants";
 
 const useFetchTrailer = (id) => {
-	const [result, setResult] = useState(null);
+  const [result, setResult] = useState(null);
 
-	useEffect(() => {
-		if (!id) return;
+  const fetchTailer = async () => {
+    try {
+      const response = await axios.get(
+        `${CONSTANTS.TMDB_MOVIE_BASE_URL}/${id}/videos?language=en-US`,
+        CONSTANTS.API_OPTIONS
+      );
+      const trailer = response.data.results?.filter(
+        (video) => video.type === "Trailer"
+      );
 
-		fetch(
-			`${CONSTANTS.TMDB_MOVIE_BASE_URL}/${id}/videos?language=en-US`,
-			CONSTANTS.API_OPTIONS
-		)
-			.then((response) => response.json())
-			.then((response) => {
-				const trailer = response.results?.filter(
-					(video) => video.type === "Trailer"
-				);
+      if (trailer) {
+        const video = !trailer.length
+          ? response?.data?.results[0].key
+          : trailer[0].key;
+        setResult(video);
+      }
+    } catch (error) {
+      console.error("Error fetching trailer:", error);
+    }
+  };
 
-				if (trailer) {
-					const video = !trailer.length
-						? response?.results[0].key
-						: trailer[0].key;
-					setResult(video);
-				}
-			})
-			.catch((err) => console.log(err));
-	}, [id]);
+  useEffect(() => {
+    if (!id) return;
+    fetchTailer();
+  }, [id]);
 
-	return result;
+  return result;
 };
 
 export default useFetchTrailer;

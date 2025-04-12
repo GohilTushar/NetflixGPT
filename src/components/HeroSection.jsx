@@ -5,15 +5,15 @@ import MovieInfo from "./MovieInfo";
 const HeroSection = () => {
 	const nowPlaying = useSelector((state) => state.movie.nowPlaying);
 
-	if (!nowPlaying.length) return null;
+	if (!nowPlaying?.length) return null;
 
-	const randomMovie = nowPlaying[3];
+	const mainMovie = nowPlaying[2];
 
-	const { title, overview } = randomMovie;
+	const { title, overview } = mainMovie;
 
 	return (
 		<>
-			<VideoBG movie={randomMovie} />
+			<VideoBG movie={mainMovie} />
 			<MovieInfo title={title} overview={overview} />
 		</>
 	);

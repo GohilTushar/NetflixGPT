@@ -1,7 +1,7 @@
 import CONSTANTS from "../utils/constants";
 
 const ContentRow = ({ title, list }) => {
-	if (!list.length) return null;
+	if (!list?.length) return null;
 
 	const first = list[0];
 	list = list.slice(1);
