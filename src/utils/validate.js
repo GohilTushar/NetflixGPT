@@ -8,9 +8,9 @@ export const checkValidFormData = (name, email, password) => {
   // If name is undefined, it means we are in sign in mode and shouldn't check for name validation
   const toTestName = name === undefined ? false : true;
 
-  const isNameValid = name.trim().split(" ").length >= 2;
-  const isEmailValid = email.includes("@") && email.includes(".");
-  const isPasswordValid = password.length >= 6;
+  const isNameValid = name?.trim().split(" ").length >= 2;
+  const isEmailValid = email?.includes("@") && email?.includes(".");
+  const isPasswordValid = password?.length >= 6;
 
   // Set error messages if not valid
   if (!isEmailValid) errorMessage.email = "Please enter a valid email address.";
