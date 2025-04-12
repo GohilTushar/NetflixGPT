@@ -1,48 +1,13 @@
 # Netflix Clone with GPT Search Feature
 
-[🌐 View Site](https://netflixgpt-pb.vercel.app/)
+[🌐 View Site](https://netflix-gpt-three-liart.vercel.app/)
 
 This is a Netflix clone project with a GPT search feature that allows users to provide prompts, and the application will return a list of movies based on the input prompt.
 
 ## Table of Contents
 
-- [Installation](#installation)
 - [Usage](#usage)
 - [Technologies Used](#technologies-used)
-
-## Installation
-
-1. Clone this repository to your local machine using:
-
-```bash
-git clone https://github.com/prateek-budhiraja/netflix-gpt.git
-```
-
-2. Change directory to the project folder:
-
-```bash
-cd netflix-gpt
-```
-
-3. Install the required dependencies:
-
-```bash
-npm install
-```
-
-4. Start the development server:
-
-Rename the `.env.example` file to `.env` and add your keys for TMDB, OpenAI and Firebase.
-
-````bash
-
-5. Start the development server:
-
-```bash
-npm start
-````
-
-5. Open your web browser and navigate to [http://localhost:3000](http://localhost:3000) to use the Netflix clone with GPT search feature.
 
 ## Usage
 
