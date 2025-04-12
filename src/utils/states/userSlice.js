@@ -2,16 +2,20 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const userSlice = createSlice({
 	name: "user",
-	initialState: null,
+	initialState: {
+		user:null
+	},
 	reducers: {
-		loginUser: (_state, action) => {
-			return action.payload;
+		loginUser: (state, action) => {
+			state.user = action.payload;
 		},
-		logoutUser: (_state) => {
-			return null;
+		logoutUser: (state) => {
+			state.user = null;
 		},
 		reduceCredit: (state) => {
-			return { ...state, credit: state.credit - 1 };
+			if (state.user && state.user.credit > 0) {
+				state.user.credit -= 1;
+			  }
 		},
 	},
 });
