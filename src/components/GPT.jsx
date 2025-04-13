@@ -117,7 +117,7 @@ const GPT = () => {
             type="text"
             placeholder="What do you want to watch?"
           />
-          <button className="cursor-pointer rounded-lg py-3 bg-red-700 text-white font-medium px-4">
+          <button className={`rounded-lg py-3 bg-red-700 text-white font-medium px-4 ${loading ? 'cursor-not-allowed opacity-50':'cursor-pointer'}`} disabled={loading}>
             Search
           </button>
         </form>
